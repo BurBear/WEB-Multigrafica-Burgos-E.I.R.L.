@@ -13,7 +13,7 @@ for (const file of pages) {
   const html = fs.readFileSync(file, 'utf8');
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
   assert.equal(ids.length, new Set(ids).size, `${file}: duplicate IDs`);
-  for (const match of html.matchAll(/(?:src|href|poster)="([^"]+)"/g)) {
+  for (const match of html.matchAll(/(?:src|data-src|href|poster)="([^"]+)"/g)) {
     const ref = match[1];
     if (ref.startsWith('#')) { assert.ok(ids.includes(ref.slice(1)), `${file}: missing anchor ${ref}`); continue; }
     if (/^(https?:|mailto:|tel:|data:)/.test(ref)) continue;
@@ -59,10 +59,13 @@ assert.ok(form.includes('method="POST"'));
 assert.deepEqual([...form.matchAll(/\bname="([^"]+)"/g)].map(match => match[1]), ['nombre', 'celular', 'correo', 'empresa', 'ruc', 'servicio', 'mensaje', '_captcha', '_next']);
 assert.ok(form.includes('https://www.multigraficaburgos.pe/gracias.html'));
 assert.equal((html.match(/class="client-logo"/g) || []).length, 34);
-assert.equal((html.match(/<video\b/g) || []).length, 1);
-assert.ok(/<video[^>]+preload="none"/.test(html));
+for (const [file, content] of contents) {
+  const videos = [...content.matchAll(/<video\b[^>]*>/g)];
+  assert.ok(videos.length <= 1, `${file}: at most one background video`);
+  for (const [tag] of videos) assert.ok(/preload="none"/.test(tag), `${file}: video must not preload before initialization`);
+}
 assert.ok(!/\bautoplay\b/.test(html));
 assert.ok(!/src="video\/(preprensa|prensa|postprensa|fondo)\.mp4"/.test(html));
 assert.ok(!/src="img\/clientes\/[^" ]+\.png"/.test(html));
 assert.ok(fs.readFileSync('gracias.html', 'utf8').includes('name="robots" content="noindex"'));
-console.log('PASS: JavaScript syntax, local assets, anchors, unique product IDs, 48 gallery images, dimensions, form contract, 34 logos, versioning and on-demand video.');
+console.log('PASS: JavaScript syntax, local assets, anchors, unique product IDs, 48 gallery images, dimensions, form contract, 34 logos, versioning and video resource configuration.');

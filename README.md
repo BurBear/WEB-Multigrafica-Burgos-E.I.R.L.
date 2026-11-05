@@ -32,7 +32,8 @@ No envía formularios ni modifica archivos.
 - `css/style.css`: sistema visual compartido. Orden: variables, base, navegación, secciones, modal y reglas adaptables.
 - `js/main.js`: mejoras independientes de navegación, catálogo, procesos, video y animaciones.
 - `js/validacion.js`: validación accesible y estado de envío. El envío sigue siendo un POST HTML tradicional.
-- `img/optimized/`: copias reducidas de recursos existentes y un poster del video; se conservaron todos los originales.
+- `img/optimized/`: recursos optimizados y poster del video utilizados por las páginas. Se eliminaron los originales y duplicados sin referencias.
+- `img/nosotros/`: las tres imágenes originales de Asesoría directa, Revisión previa y Presentación final, utilizadas en las tarjetas de `nosotros.html`.
 - `.htaccess`: compresión, caché de recursos, revalidación de HTML y cabeceras existentes.
 - `.gitattributes`: los videos continúan gestionados con Git LFS.
 - `.local/`: capturas, mediciones y herramientas temporales de revisión; no se versiona ni se publica.
@@ -54,9 +55,12 @@ El menú móvil usa `details/summary`: puede abrirse sin JavaScript y no cambia 
 Los procesos tienen tres artículos con fotos diferentes. JavaScript los convierte en pestañas
 con flechas, Inicio y Fin; sin JavaScript, los tres artículos siguen disponibles.
 
-El video `video/fondo-720.mp4` es una demostración general de producción, no tres grabaciones
-distintas. Se reproduce solo por acción del visitante, usa `preload="none"`, tiene poster y se pausa
-al salir de pantalla, cerrar el desplegable o dejar la pestaña. No se reanuda automáticamente.
+La portada reproduce `video/hero-inicio.mp4` una sola vez, sin sonido, a partir del original
+`video/Fondo.MOV`. Al terminar muestra `video/Fondo.PNG`, que también se utiliza como poster.
+La copia para web usa H.264, 1080p y 30 fps. El original se conserva.
+El visitante puede pausar y reanudar el fondo; al salir de pantalla o cambiar de pestaña
+se pausa. Sin JavaScript, con movimiento reducido o si falla la reproducción, se muestra
+la imagen estática. El video no se repite al terminar.
 
 ### Formulario
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Multigráfica Burgos | Imprenta en Trujillo</title>
+  <title>Multigrafica Burgos | Inicio</title>
 
   <!-- SEO -->
   <meta name="description" content="Empresa trujillana con más de 20 años de experiencia en impresión, publicidad y marketing.">
@@ -22,10 +22,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <link rel="preload" as="image" href="img/hero-poster.webp" imagesrcset="img/optimized/hero-poster-640.webp 640w, img/hero-poster.webp 1600w" imagesizes="100vw">
+  <link rel="preload" as="image" href="video/Fondo.PNG">
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css?v=20261009-1">
-  <link rel="icon" href="img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css?v=20261105-13">
+
+  <link rel="icon" href="favicon.ico?v=20261105-3" type="image/x-icon" sizes="16x16 32x32 48x48 64x64">
+  <link rel="icon" href="img/favicon.png?v=20261105-3" type="image/png" sizes="64x64">
 </head>
 <body data-page="inicio">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -33,37 +35,53 @@
     <div class="container header-inner">
       <a class="logo" href="index.html" aria-label="Ir al inicio de Multigráfica Burgos"><img src="img/logo.png" width="945" height="238" alt="Multigráfica Burgos"></a>
       <nav id="desktopNav" class="main-nav desktop-nav" aria-label="Navegación principal">
-        <ul><li><a href="index.html" aria-current="page">Inicio</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="productos.html">Productos</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="cotizacion.html" class="nav-quote">Cotizar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></li></ul>
+        <ul><li><a href="index.html" aria-current="page">Inicio</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="productos.html">Productos</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="cotizacion.html" class="nav-quote">Cotizar <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></li></ul>
       </nav>
       <details id="mobileNavigation" class="mobile-navigation">
         <summary class="menu-toggle" id="menuToggle" aria-controls="mainNav"><span></span><span></span><span class="sr-only">Menú principal</span></summary>
         <nav id="mainNav" class="main-nav" aria-label="Navegación principal móvil">
-          <ul><li><a href="index.html" aria-current="page">Inicio</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="productos.html">Productos</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="cotizacion.html" class="nav-quote">Cotizar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></li></ul>
+          <ul><li><a href="index.html" aria-current="page">Inicio</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="productos.html">Productos</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="cotizacion.html" class="nav-quote">Cotizar <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></li></ul>
         </nav>
       </details>
     </div>
   </header>
   <main id="contenido" tabindex="-1">
     <section id="inicio" class="hero" aria-labelledby="hero-title">
-      <img class="hero-image" src="img/hero-poster.webp" srcset="img/optimized/hero-poster-640.webp 640w, img/hero-poster.webp 1600w" sizes="100vw" width="1600" height="900" fetchpriority="high" alt="Maquinaria gráfica trabajando sobre piezas impresas a color">
+      <img class="hero-image" src="video/Fondo.PNG" width="1672" height="941" fetchpriority="high" alt="" aria-hidden="true">
+      <video id="heroVideo" class="hero-video" data-src="video/hero-inicio.mp4" poster="video/Fondo.PNG" width="1920" height="1080" muted playsinline preload="none" aria-hidden="true" tabindex="-1" hidden></video>
       <div class="container hero-copy">
-        <p class="eyebrow" data-reveal>Multigráfica Burgos · Trujillo</p>
-        <h1 id="hero-title" data-reveal>Deja tu huella.<br><span>Nosotros la imprimimos.</span></h1>
+
+        <h1 id="hero-title" data-reveal>Deja tu huella. <span>Nosotros la imprimimos.</span></h1>
         <p class="hero-description" data-reveal>Diseño, impresión y acabados para dar forma a la imagen de tu empresa.</p>
-        <div class="hero-actions" data-reveal><a class="button button-primary" href="cotizacion.html">Solicitar cotización <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a><a class="button hero-secondary" href="productos.html">Ver productos</a></div>
+        <div class="hero-actions" data-reveal><a class="button button-primary" href="cotizacion.html">Solicitar cotización <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a><a class="button hero-secondary" href="productos.html">Ver productos</a></div>
       </div>
-      <a class="hero-scroll" href="#presentacion" aria-label="Conocer Multigráfica Burgos"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i><span>Conócenos</span></a>
+      <button id="heroVideoToggle" class="hero-video-toggle" type="button" hidden>Pausar video</button>
+      <a class="hero-scroll" href="#presentacion" aria-label="Conocer Multigráfica Burgos"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v16m-6-6 6 6 6-6"/></svg><span>Conócenos</span></a>
     </section>
     <section id="presentacion" class="section home-intro" aria-labelledby="home-title">
       <div class="container home-intro-grid">
-        <div data-reveal><p class="eyebrow">Experiencia que se imprime</p><h2 id="home-title">Más de 20 años<br><em>dando forma a tus ideas.</em></h2></div>
-        <div data-reveal><p>Somos una empresa trujillana con experiencia en impresión, publicidad y marketing. Te acompañamos desde la elección del material hasta la presentación final.</p><a class="text-link" href="nosotros.html">Conoce nuestra historia <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
+        <div data-reveal><p class="eyebrow">Experiencia que se imprime</p><h2 id="home-title">Más de 20 años <em>dando forma a tus ideas.</em></h2></div>
+        <div data-reveal><p>Somos una empresa trujillana con experiencia en impresión, publicidad y marketing. Te acompañamos desde la elección del material hasta la presentación final.</p><a class="text-link" href="nosotros.html">Conoce nuestra historia <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></div>
       </div>
       <nav class="container home-paths" aria-label="Explora Multigráfica Burgos" data-stagger>
-        <a href="productos.html"><span class="eyebrow">Para tu marca</span><strong>Productos gráficos</strong><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-        <a href="servicios.html"><span class="eyebrow">De principio a fin</span><strong>Impresión y acabados</strong><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-        <a href="cotizacion.html"><span class="eyebrow">Empecemos</span><strong>Cotiza tu proyecto</strong><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        <a href="productos.html"><span class="eyebrow">Para tu marca</span><strong>Productos gráficos</strong><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+        <a href="servicios.html"><span class="eyebrow">De principio a fin</span><strong>Impresión y acabados</strong><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+        <a href="cotizacion.html"><span class="eyebrow">Empecemos</span><strong>Cotiza tu proyecto</strong><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
       </nav>
+    </section>
+    <section id="sectores" class="section sectors-section" aria-labelledby="sectores-title">
+      <div class="container">
+        <header class="section-heading centered" data-reveal><p class="eyebrow">Para cada necesidad</p><h2 id="sectores-title">Sectores que <em>atendemos.</em></h2><p class="sectors-intro">Soluciones gráficas pensadas para tu actividad y la imagen de tu marca.</p></header>
+        <div class="sectors-list" data-stagger>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="10" y="8" width="21" height="32" rx="2"/><path d="M31 20h7v20H7m9-25h3m5 0h2m-10 7h3m5 0h2m-10 7h3m5 0h2m-5 11v-7h6v7"/></svg></span><h3>Empresas corporativas</h3><p>Papelería, carpetas y material para tu marca.</p></article>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 17 19-9 19 9-19 9-19-9Zm8 5v11c6 5 16 5 22 0V22m8-5v16"/><circle cx="43" cy="36" r="2"/></svg></span><h3>Educación e instituciones</h3><p>Agendas, libros y materiales institucionales.</p></article>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 7v11c0 4 10 4 10 0V7M15 7v33m-5-26h10m14 26V8c-8 4-9 13-7 17h7"/></svg></span><h3>Restaurantes y negocios</h3><p>Cartas, volantes y publicidad para tu negocio.</p></article>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="7" y="7" width="34" height="34" rx="7"/><path d="M20 14h8v6h6v8h-6v6h-8v-6h-6v-8h6v-6Z"/></svg></span><h3>Clínicas y laboratorios</h3><p>Formatos, sobres y papelería membretada.</p></article>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M24 13c-5-4-12-5-19-3v27c7-2 14-1 19 3 5-4 12-5 19-3V10c-7-2-14-1-19 3Zm0 0v27m-12-22c3 0 5 1 7 2m-7 5c3 0 5 1 7 2m10-7c2-1 4-2 7-2m-7 9c2-1 4-2 7-2"/></svg></span><h3>Editoriales y autores</h3><p>Libros, revistas y memorias con acabados cuidados.</p></article>
+          <article class="sector-item"><span class="sector-icon"><svg class="sector-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 19v21h32V19M5 19l5-11h28l5 11M6 19c0 6 9 6 9 0 0 6 9 6 9 0 0 6 9 6 9 0 0 6 9 6 9 0M17 40V29h10v11m6-11h2"/></svg></span><h3>Comercios y emprendedores</h3><p>Etiquetas, empaques y tarjetas para tus productos.</p></article>
+        </div>
+        <div class="sectors-cta"><a class="button button-primary" href="cotizacion.html">Hablemos de tu proyecto <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></div>
+      </div>
     </section>
   </main>
 
@@ -74,7 +92,7 @@
           <img src="img/logo.png" width="945" height="238" loading="lazy" alt="Multigráfica Burgos">
         </a>
         <p>Multigráfica Burgos E.I.R.L.</p>
-        <span>RUC: 20481675783</span>
+
       </div>
 
       <div class="footer-contact">
@@ -104,6 +122,6 @@
     <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
   </a>
 
-  <script defer src="js/main.js?v=20261008-1"></script>
+  <script defer src="js/main.js?v=20261105-11"></script>
 </body>
 </html>
