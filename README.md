@@ -69,8 +69,8 @@ La validación no representa una confirmación de recepción. El navegador debe 
 del servicio externo. El botón recupera su estado al volver a la página; una espera prolongada
 informa que la recepción no ha sido confirmada y permite revisar antes de reenviar.
 
-El teléfono de contacto **949 943 587** y WhatsApp **903 025 062** son distintos y se conservaron.
-Confirmar con la empresa antes de unificarlos.
+El teléfono de contacto y WhatsApp utilizan el mismo número: **949 943 587**.
+Los enlaces de WhatsApp usan el formato internacional `51949943587`.
 
 ### Animación y accesibilidad
 
