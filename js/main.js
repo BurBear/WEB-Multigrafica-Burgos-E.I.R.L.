@@ -130,18 +130,25 @@ document.addEventListener('DOMContentLoaded', () => {
     quote.addEventListener('click', () => dialog.close('quote'));
   }
 
-  function initCatalogueFilters() {
-    const filters = document.querySelector('.product-filters');
-    if (!filters) return;
-    const cards = [...document.querySelectorAll('.product-card')];
-    const status = document.getElementById('productResults');
-    filters.hidden = false;
-    filters.addEventListener('click', event => {
-      const button = event.target.closest('button[data-filter]');
-      if (!button) return;
-      filters.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      cards.forEach(card => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; });
-      status.textContent = `${cards.filter(card => !card.hidden).length} productos disponibles`;
+  function initClients() {
+    const grid = document.getElementById('clientsGrid');
+    const button = document.getElementById('clientsToggle');
+    if (!grid || !button) return;
+    const extra = [...grid.querySelectorAll('.client-logo')].slice(12);
+    if (!extra.length) return;
+    const label = button.querySelector('[data-clients-label]');
+    const setExpanded = expanded => {
+      extra.forEach(logo => { logo.hidden = !expanded; });
+      button.setAttribute('aria-expanded', String(expanded));
+      label.textContent = expanded ? 'Ver menos clientes' : 'Ver todos nuestros clientes';
+    };
+    // Without JavaScript, the full client grid remains visible.
+    setExpanded(false);
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') !== 'true';
+      setExpanded(expanded);
+      if (!expanded) button.scrollIntoView({ block: 'nearest', behavior: 'instant' });
     });
   }
 
@@ -162,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initLegacyAnchors() {
     if (document.body.dataset.page !== 'inicio') return;
-    const routes = { nosotros: 'nosotros.html', 'porque-mb': 'nosotros.html#porque-mb', diferenciales: 'nosotros.html#porque-mb', clientes: 'nosotros.html#clientes', productos: 'productos.html', servicios: 'servicios.html', procesos: 'servicios.html#procesos', sectores: 'servicios.html#sectores', cotizacion: 'cotizacion.html', contacto: 'cotizacion.html' };
+    const routes = { nosotros: 'nosotros.html', 'porque-mb': 'nosotros.html#porque-mb', diferenciales: 'nosotros.html#porque-mb', clientes: 'nosotros.html#clientes', productos: 'productos.html', servicios: 'servicios.html', procesos: 'nosotros.html#procesos', cotizacion: 'cotizacion.html', contacto: 'cotizacion.html' };
     const redirect = () => {
       const key = location.hash.slice(1);
       const target = Object.hasOwn(routes, key) ? routes[key] : null;
@@ -194,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     list.setAttribute('role', 'tablist');
     list.setAttribute('aria-label', 'Etapas de producción');
     // Both arrow axes work; orientation tracks the actual responsive layout.
-    const compact = window.matchMedia('(max-width: 760px)');
+    const compact = window.matchMedia('(min-width: 521px) and (max-width: 960px)');
     const updateOrientation = () => list.setAttribute('aria-orientation', compact.matches ? 'horizontal' : 'vertical');
     compact.addEventListener('change', updateOrientation); updateOrientation();
     tabs.forEach((tab, i) => {
@@ -219,23 +226,58 @@ document.addEventListener('DOMContentLoaded', () => {
     motion.addEventListener('change', () => { if (motion.matches) transition?.cancel(); });
   }
 
-  function initVideo() {
-    const video = document.getElementById('productionVideo');
-    if (!video) return;
-    // No autoplay, including when motion is allowed. preload=none waits for explicit playback.
-    const disclosure = video.closest('details');
-    disclosure.addEventListener('toggle', () => { if (!disclosure.open) video.pause(); });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries => entries.forEach(entry => {
-        if (!entry.isIntersecting) video.pause();
-      }), { threshold: 0 }).observe(video);
-    }
-    document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); });
-    motion.addEventListener('change', () => { if (motion.matches) video.pause(); });
-    video.addEventListener('error', () => {
-      const caption = disclosure.querySelector('.caption');
-      caption.textContent = 'El video no está disponible en este momento. Puedes conocer las etapas de producción arriba.';
+  function initHeroVideo() {
+    const video = document.getElementById('heroVideo');
+    const toggle = document.getElementById('heroVideoToggle');
+    if (!video || !toggle || motion.matches) return;
+    let finished = false;
+    let pausedByUser = false;
+    let visible = true;
+    const updateToggle = () => {
+      toggle.textContent = video.paused ? 'Reanudar video' : 'Pausar video';
+    };
+    const showStill = () => {
+      finished = true;
+      video.pause();
+      video.hidden = true;
+      toggle.hidden = true;
+    };
+    const play = () => {
+      if (finished || pausedByUser || !visible || document.hidden || motion.matches) return;
+      if (!video.getAttribute('src')) video.src = video.dataset.src;
+      video.muted = true;
+      video.play().then(() => {
+        if (finished || !visible || document.hidden || motion.matches) { video.pause(); return; }
+        video.hidden = false;
+        toggle.hidden = false;
+        updateToggle();
+      }).catch(() => {
+        if (!finished && visible && !document.hidden && !pausedByUser) showStill();
+      });
+    };
+    video.addEventListener('ended', showStill);
+    video.addEventListener('error', showStill);
+    video.addEventListener('pause', updateToggle);
+    video.addEventListener('play', updateToggle);
+    toggle.addEventListener('click', () => {
+      pausedByUser = !video.paused;
+      if (pausedByUser) { video.pause(); updateToggle(); }
+      else play();
     });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        visible = entries[0].isIntersecting;
+        if (!visible) video.pause();
+        else play();
+      }, { threshold: .05 });
+      observer.observe(video.closest('.hero'));
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) video.pause();
+      else play();
+    });
+    motion.addEventListener('change', () => { if (motion.matches) showStill(); });
+    play();
   }
 
   function initAnimations() {
@@ -282,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Independent features keep the rest of the page usable if an enhancement fails.
-  [initLegacyAnchors, initNavigation, initCatalogueFilters, initProducts, initQuoteContext, initProcesses, initVideo, initAnimations].forEach(init => {
+  [initLegacyAnchors, initNavigation, initProducts, initClients, initQuoteContext, initProcesses, initHeroVideo, initAnimations].forEach(init => {
     try { init(); } catch (error) { console.error(`No se pudo iniciar ${init.name}`, error); }
   });
 });
