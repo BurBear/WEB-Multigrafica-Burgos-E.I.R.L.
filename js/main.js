@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initLegacyAnchors() {
     if (document.body.dataset.page !== 'inicio') return;
-    const routes = { nosotros: 'nosotros.html', 'porque-mb': 'nosotros.html#porque-mb', diferenciales: 'nosotros.html#porque-mb', clientes: 'nosotros.html#clientes', productos: 'productos.html', servicios: 'servicios.html', procesos: 'nosotros.html#procesos', cotizacion: 'cotizacion.html', contacto: 'cotizacion.html' };
+    const routes = { nosotros: 'nosotros.html', 'porque-mb': 'nosotros.html#porque-mb', diferenciales: 'nosotros.html#porque-mb', clientes: 'nosotros.html#clientes', productos: 'productos.html', servicios: 'servicios.html', procesos: 'index.html#soluciones', cotizacion: 'cotizacion.html', contacto: 'cotizacion.html' };
     const redirect = () => {
       const key = location.hash.slice(1);
       const target = Object.hasOwn(routes, key) ? routes[key] : null;
@@ -177,53 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('hashchange', redirect);
     redirect();
-  }
-
-  function initProcesses() {
-    const section = document.getElementById('procesos');
-    if (!section) return;
-    const list = section.querySelector('.process-tabs');
-    const tabs = [...section.querySelectorAll('.process-tab')];
-    const panels = [...section.querySelectorAll('.process-panel')];
-    if (tabs.length !== panels.length || !tabs.length) return;
-    let active = 0;
-    let transition;
-    function select(index, moveFocus = false) {
-      active = index;
-      transition?.cancel();
-      tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
-      panels.forEach((panel, i) => { panel.hidden = i !== index; });
-      if (moveFocus) tabs[index].focus();
-      if (!motion.matches && panels[index].animate) {
-        transition = panels[index].animate([{ opacity: .55, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'ease-out' });
-      }
-    }
-    list.setAttribute('role', 'tablist');
-    list.setAttribute('aria-label', 'Etapas de producción');
-    // Both arrow axes work; orientation tracks the actual responsive layout.
-    const compact = window.matchMedia('(min-width: 521px) and (max-width: 960px)');
-    const updateOrientation = () => list.setAttribute('aria-orientation', compact.matches ? 'horizontal' : 'vertical');
-    compact.addEventListener('change', updateOrientation); updateOrientation();
-    tabs.forEach((tab, i) => {
-      tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', panels[i].id);
-      panels[i].setAttribute('role', 'tabpanel'); panels[i].tabIndex = 0;
-      tab.addEventListener('click', event => { event.preventDefault(); select(i); });
-      tab.addEventListener('keydown', event => {
-        const next = ['ArrowRight', 'ArrowDown'].includes(event.key);
-        const prev = ['ArrowLeft', 'ArrowUp'].includes(event.key);
-        if (next || prev) { event.preventDefault(); select((active + (next ? 1 : -1) + tabs.length) % tabs.length, true); }
-        else if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); select(event.key === 'Home' ? 0 : tabs.length - 1, true); }
-        else if (event.key === ' ') { event.preventDefault(); select(i); }
-      });
-    });
-    section.classList.add('processes-enhanced');
-    const initial = panels.findIndex(panel => `#${panel.id}` === location.hash);
-    select(initial >= 0 ? initial : 0);
-    window.addEventListener('hashchange', () => {
-      const index = panels.findIndex(panel => `#${panel.id}` === location.hash);
-      if (index >= 0) select(index);
-    });
-    motion.addEventListener('change', () => { if (motion.matches) transition?.cancel(); });
   }
 
   function initHeroVideo() {
@@ -290,6 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initAnimations() {
     if (motion.matches || !('IntersectionObserver' in window) || !Element.prototype.animate) return;
+    // Inicio uses shorter editorial reveals; other pages retain their current timing.
+    const home = document.body.dataset.page === 'inicio';
     const elements = new Set(document.querySelectorAll('[data-reveal]'));
     const delays = new WeakMap();
     document.querySelectorAll('[data-stagger]').forEach(group => {
@@ -301,10 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
       element.classList.remove('motion-pending');
       if (!animate || motion.matches) return;
       const photo = element.dataset.reveal === 'photo';
-      const frames = photo
+      const frames = home
+        ? [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }]
+        : photo
         ? [{ opacity: 0, clipPath: 'inset(6% 0 0 0)', transform: 'translateY(24px)' }, { opacity: 1, clipPath: 'inset(0)', transform: 'none' }]
         : [{ opacity: 0, transform: 'translateY(22px)' }, { opacity: 1, transform: 'none' }];
-      const animation = element.animate(frames, { duration: photo ? 1000 : 780, delay: delays.get(element) || 0, easing: 'cubic-bezier(.2,.65,.3,1)', fill: 'backwards' });
+      const duration = home ? (photo ? 560 : 480) : (photo ? 1000 : 780);
+      const animation = element.animate(frames, { duration, delay: delays.get(element) || 0, easing: 'cubic-bezier(.2,.65,.3,1)', fill: 'backwards' });
       animations.set(element, animation);
       animation.onfinish = () => animations.delete(element);
     };
@@ -332,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Independent features keep the rest of the page usable if an enhancement fails.
-  [initLegacyAnchors, initNavigation, initProducts, initClients, initQuoteContext, initProcesses, initHeroVideo, initAnimations].forEach(init => {
+  [initLegacyAnchors, initNavigation, initProducts, initClients, initQuoteContext, initHeroVideo, initAnimations].forEach(init => {
     try { init(); } catch (error) { console.error(`No se pudo iniciar ${init.name}`, error); }
   });
 });

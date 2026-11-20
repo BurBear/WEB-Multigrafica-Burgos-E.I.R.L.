@@ -16,6 +16,7 @@ El servidor solo escucha en la máquina local y no interpreta `.htaccess`.
 ```powershell
 node scripts/check.mjs
 node scripts/check-hero.mjs
+node scripts/check-inicio.mjs
 ```
 
 Comprueba sintaxis JavaScript, recursos locales, anclas, identificadores del catálogo,
@@ -26,19 +27,20 @@ No envía formularios ni modifica archivos.
 ## Archivos y mantenimiento
 
 - `index.html`: introducción de la empresa y accesos a las páginas principales.
-- `nosotros.html`: trayectoria, atención al cliente, procesos y clientes.
+- `nosotros.html`: trayectoria, atención al cliente y clientes.
 - `productos.html`: catálogo y visor de productos.
-- `servicios.html`: servicios y enlaces de cotización. Los procesos están en Nosotros y los sectores en Inicio.
+- `servicios.html`: servicios y enlaces de cotización. El proceso interactivo y los sectores están en Inicio.
 - `cotizacion.html`: formulario, con referencia opcional al producto o servicio elegido.
 - `gracias.html`: destino de confirmación configurado para FormSubmit; no se navega a esta página desde JavaScript para simular un envío.
 - `css/style.css`: sistema visual compartido. Orden: variables, base, navegación, secciones, modal y reglas adaptables.
-- `js/main.js`: mejoras independientes de navegación, catálogo, procesos, video y animaciones.
+- `js/main.js`: mejoras independientes de navegación, catálogo, clientes, video y animaciones compartidas.
+- `css/inicio.css` y `js/inicio.js`: composición, animaciones y proceso interactivo exclusivos del Inicio.
 - `js/validacion.js`: validación accesible y estado de envío. El envío sigue siendo un POST HTML tradicional.
 - `img/optimized/`: recursos utilizados por las páginas. Los cuatro servicios optimizados en Fase 1 tienen WebP real a 480, 800 y resolución original; sus originales están respaldados fuera del proyecto. Ver `docs/FASE-1-OPTIMIZACION.md`.
 - `img/nosotros/`: las tres imágenes originales de Asesoría directa, Revisión previa y Presentación final, utilizadas en las tarjetas de `nosotros.html`.
 - `.htaccess`: compresión, caché de recursos, revalidación de HTML y cabeceras existentes.
 - `.gitattributes`: los videos continúan gestionados con Git LFS.
-- `.local/`: capturas, mediciones y herramientas temporales de revisión; no se versiona ni se publica.
+- Los temporales de `.local/`, las fotografías sustituidas, el RAR del catálogo y la revisión histórica se archivaron fuera del proyecto en `Respaldos-Multigrafica-Burgos/Limpieza-20261120-174338/`.
 
 ### Catálogo
 
@@ -54,7 +56,7 @@ al cambiarlos, actualizar ambos en las cinco páginas. El enlace actual usa `ari
 CSS muestra únicamente la navegación correspondiente al ancho de pantalla.
 El menú móvil usa `details/summary`: puede abrirse sin JavaScript y no cambia la altura de la cabecera al inicializarse.
 
-Los procesos tienen tres artículos con fotos diferentes. JavaScript los convierte en pestañas
+El proceso de Inicio tiene tres artículos con fotos diferentes. JavaScript los convierte en pestañas
 con flechas, Inicio y Fin; sin JavaScript, los tres artículos siguen disponibles.
 
 La portada reproduce `video/hero-inicio.mp4?v=20261119-1` una sola vez, sin sonido.
@@ -100,7 +102,7 @@ La publicación sigue siendo estática. Incluir las páginas, CSS, JS y recursos
 excluir `.git`, `.local`, `docs`, herramientas de revisión, archivos `.rar` y originales de respaldo. En un clon nuevo, recuperar los objetos
 Git LFS antes de publicar videos. No se ha publicado la Fase 1 ni se han activado redirecciones en el hosting.
 
-`REVISION-REDISENO.md` conserva el informe de la versión anterior (7 de octubre).
+La revisión de octubre se conserva en el respaldo externo; no forma parte del proyecto vigente.
 La Fase 1 prepara sitemap y robots para `https://www.multigraficaburgos.pe/`.
-`.htaccess` permanece sin cambios; revisar reglas de cPanel y proxy antes de activar redirecciones.
+`.htaccess` conserva las reglas actuales de compresión, caché y cabeceras; revisar reglas de cPanel y proxy antes de activar redirecciones.
 El informe `docs/FASE-1-OPTIMIZACION.md` incluye medidas, limitaciones y recuperación.
