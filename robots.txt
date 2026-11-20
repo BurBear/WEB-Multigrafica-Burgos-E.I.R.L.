@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://multigraficaburgos.pe/sitemap.xml
+Sitemap: https://www.multigraficaburgos.pe/sitemap.xml

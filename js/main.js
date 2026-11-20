@@ -229,10 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function initHeroVideo() {
     const video = document.getElementById('heroVideo');
     const toggle = document.getElementById('heroVideoToggle');
+    const poster = document.querySelector('.hero-image');
     if (!video || !toggle || motion.matches) return;
     let finished = false;
     let pausedByUser = false;
-    let visible = true;
+    // Wait for the first observer result and let the priority poster finish first.
+    let visible = !('IntersectionObserver' in window);
+    let posterReady = !poster || poster.complete;
     const updateToggle = () => {
       toggle.textContent = video.paused ? 'Reanudar video' : 'Pausar video';
     };
@@ -243,11 +246,11 @@ document.addEventListener('DOMContentLoaded', () => {
       toggle.hidden = true;
     };
     const play = () => {
-      if (finished || pausedByUser || !visible || document.hidden || motion.matches) return;
+      if (finished || pausedByUser || !visible || !posterReady || document.hidden || motion.matches || !video.paused) return;
       if (!video.getAttribute('src')) video.src = video.dataset.src;
       video.muted = true;
       video.play().then(() => {
-        if (finished || !visible || document.hidden || motion.matches) { video.pause(); return; }
+        if (finished || pausedByUser || !visible || document.hidden || motion.matches) { video.pause(); return; }
         video.hidden = false;
         toggle.hidden = false;
         updateToggle();
@@ -255,6 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!finished && visible && !document.hidden && !pausedByUser) showStill();
       });
     };
+    if (poster && !posterReady) {
+      const posterSettled = () => { posterReady = true; play(); };
+      poster.addEventListener('load', posterSettled, { once: true });
+      poster.addEventListener('error', posterSettled, { once: true });
+    }
     video.addEventListener('ended', showStill);
     video.addEventListener('error', showStill);
     video.addEventListener('pause', updateToggle);
