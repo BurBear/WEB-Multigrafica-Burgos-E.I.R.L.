@@ -1,108 +1,139 @@
+<div align="center">
+
 # Multigráfica Burgos
 
-Web corporativa estática en HTML, CSS y JavaScript nativo. La publicación por ZIP y cPanel no requiere Node.js, instalación de paquetes ni compilación. El formulario utiliza FormSubmit como servicio externo de recepción.
+### Diseño editorial. Desarrollo frontend. Atención al detalle.
 
-## Vista local y comprobaciones
+Sitio corporativo para una imprenta de Trujillo, Perú.<br>
+Una experiencia digital que conecta productos, procesos y solicitudes de cotización.
 
-Desde la raíz del repositorio, con Node.js instalado:
+![HTML5](https://img.shields.io/badge/HTML5-09232F?style=flat-square&logo=html5&logoColor=BEEF65)
+![CSS3](https://img.shields.io/badge/CSS3-09232F?style=flat-square&logo=css&logoColor=BEEF65)
+![JavaScript](https://img.shields.io/badge/JavaScript-09232F?style=flat-square&logo=javascript&logoColor=BEEF65)
+![Publicación estática](https://img.shields.io/badge/Deploy-ZIP_%2B_cPanel-09232F?style=flat-square)
 
-```powershell
+[Sitio de la empresa](https://www.multigraficaburgos.pe/) · [Explorar Inicio](index.html) · [Decisiones técnicas](#decisiones-técnicas)
+
+</div>
+
+---
+
+## El proyecto
+
+Modernización de una web corporativa de industria gráfica con una dirección visual editorial-industrial: azul profundo, acentos verdes, fotografía de producto y una jerarquía tipográfica clara.
+
+El trabajo combina diseño de interfaz, desarrollo responsive, optimización de recursos e interacciones accesibles. La arquitectura conserva HTML, CSS y JavaScript nativo para facilitar su mantenimiento y la publicación en un hosting tradicional.
+
+**El objetivo:** facilitar que una persona conozca la empresa, explore lo que puede imprimir y llegue a una solicitud de cotización con contexto sobre su proyecto.
+
+| Catálogo | Galería de detalle | Clientes | Publicación |
+| :---: | :---: | :---: | :---: |
+| **16 productos** | **48 imágenes** | **34 logos** | **ZIP + cPanel** |
+
+## Experiencia e interacción
+
+- **Inicio editorial:** hero con video optimizado, fotografías responsive y animaciones diferenciadas por sección.
+- **Proceso interactivo:** Preprensa, Prensa y Postprensa con navegación por teclado, precarga cercana al viewport y transiciones que esperan a que la siguiente imagen esté preparada.
+- **Catálogo con visor:** modal nativo con galería, controles de teclado, restauración del foco y enlace de cotización asociado al producto.
+- **Contacto contextual:** enlaces de servicios y productos que pueden completar la consulta sin sobrescribir un mensaje ya redactado.
+- **Formulario accesible:** validación por campo, mensajes asociados mediante ARIA y estado de envío. La recepción se gestiona mediante FormSubmit.
+- **Contenido adaptable:** navegación móvil nativa, cuadrículas responsive y fotografías con dimensiones explícitas para reservar su espacio.
+
+## Decisiones técnicas
+
+| Decisión | Aplicación en el proyecto |
+| --- | --- |
+| **Mejora progresiva** | El catálogo conserva desplegables nativos y el menú móvil utiliza `details/summary`. El contenido principal sigue disponible sin JavaScript. |
+| **Datos sin duplicación** | El visor obtiene nombres, especificaciones e imágenes desde las tarjetas HTML del catálogo. |
+| **Animación nativa** | IntersectionObserver y Web Animations API coordinan revelaciones de una sola ejecución, sin bibliotecas adicionales de animación. |
+| **Movimiento reducido** | Las animaciones respetan `prefers-reduced-motion`; el hero utiliza una imagen estática cuando corresponde. |
+| **Carga de medios controlada** | Imágenes WebP con `srcset`, carga diferida fuera del hero y video que espera al poster prioritario y a la visibilidad de la sección. |
+| **Interacciones resistentes** | Las selecciones rápidas del proceso descartan resultados atrasados; una imagen fallida conserva la fotografía anterior. |
+| **Separación de responsabilidades** | Estilos y comportamiento de Inicio aislados de los componentes compartidos y de la validación del formulario. |
+| **Despliegue sencillo** | Archivos estáticos, sin servidor de aplicación ni compilación obligatoria en producción. |
+
+Estas decisiones permiten revisar competencias de **HTML semántico, CSS responsive, JavaScript asíncrono, accesibilidad, optimización multimedia y mantenimiento de una interfaz existente** directamente en el código.
+
+## Calidad y verificación
+
+El proyecto incluye comprobaciones locales sin dependencias de paquetes:
+
+| Comprobación | Alcance |
+| --- | --- |
+| `check.mjs` | Sintaxis JavaScript, rutas, anclas, recursos referenciados, formatos y dimensiones de imágenes, `srcset`, catálogo, logos, metadatos y estructura del formulario. |
+| `check-hero.mjs` | Diez escenarios del controlador del hero: poster, visibilidad, pausa manual, finalización, errores y movimiento reducido. |
+| `check-inicio.mjs` | Teclado, selecciones rápidas, decodificación lenta o fallida, precarga y revelaciones sin objetivos duplicados. |
+
+Las pruebas de estado ejecutan los controladores reales en un entorno simulado. **No sustituyen la revisión visual en navegador, la medición de Core Web Vitals ni una prueba autorizada de recepción del formulario.**
+
+## Ejecutar en local
+
+Se necesitan **Git, Git LFS y Node.js** para clonar con los medios y utilizar las herramientas locales. No hay paquetes npm que instalar.
+
+```bash
+git clone --branch redisenio-inicio-fase2 https://github.com/BurBear/WEB-Multigrafica-Burgos-E.I.R.L..git multigrafica-burgos
+cd multigrafica-burgos
+git lfs pull
 node scripts/serve.mjs
 ```
 
-Abrir `http://127.0.0.1:8000`. Detener el servidor con `Ctrl+C`.
-El servidor solo escucha en la máquina local y no interpreta `.htaccess`.
+Abrir **http://127.0.0.1:8000**. Para detener la vista previa, usar `Ctrl+C`.
 
-```powershell
+```bash
 node scripts/check.mjs
 node scripts/check-hero.mjs
 node scripts/check-inicio.mjs
 ```
 
-Comprueba sintaxis JavaScript, recursos locales, anclas, identificadores del catálogo,
-imágenes del visor, formato y dimensiones reales de PNG/WebP, srcset, contrato del formulario,
-logos, canonical y sitemap. La prueba del hero comprueba estados y no sustituye pruebas en navegador.
-No envía formularios ni modifica archivos.
+> El servidor local solo escucha en la máquina y no interpreta `.htaccess`. Las reglas de Apache deben comprobarse en un entorno compatible.
 
-## Archivos y mantenimiento
+## Organización del código
 
-- `index.html`: introducción de la empresa y accesos a las páginas principales.
-- `nosotros.html`: trayectoria, atención al cliente y clientes.
-- `productos.html`: catálogo y visor de productos.
-- `servicios.html`: servicios y enlaces de cotización. El proceso interactivo y los sectores están en Inicio.
-- `cotizacion.html`: formulario, con referencia opcional al producto o servicio elegido.
-- `gracias.html`: destino de confirmación configurado para FormSubmit; no se navega a esta página desde JavaScript para simular un envío.
-- `css/style.css`: sistema visual compartido. Orden: variables, base, navegación, secciones, modal y reglas adaptables.
-- `js/main.js`: mejoras independientes de navegación, catálogo, clientes, video y animaciones compartidas.
-- `css/inicio.css` y `js/inicio.js`: composición, animaciones y proceso interactivo exclusivos del Inicio.
-- `js/validacion.js`: validación accesible y estado de envío. El envío sigue siendo un POST HTML tradicional.
-- `img/optimized/`: recursos utilizados por las páginas. Los cuatro servicios optimizados en Fase 1 tienen WebP real a 480, 800 y resolución original; sus originales están respaldados fuera del proyecto. Ver `docs/FASE-1-OPTIMIZACION.md`.
-- `img/nosotros/`: las tres imágenes originales de Asesoría directa, Revisión previa y Presentación final, utilizadas en las tarjetas de `nosotros.html`.
-- `.htaccess`: compresión, caché de recursos, revalidación de HTML y cabeceras existentes.
-- `.gitattributes`: los videos continúan gestionados con Git LFS.
-- Los temporales de `.local/`, las fotografías sustituidas, el RAR del catálogo y la revisión histórica se archivaron fuera del proyecto en `Respaldos-Multigrafica-Burgos/Limpieza-20261120-174338/`.
+```text
+├── index.html              # Inicio y proceso interactivo
+├── nosotros.html           # Empresa, atención y clientes
+├── productos.html          # Catálogo y visor de productos
+├── servicios.html          # Servicios y accesos a cotización
+├── cotizacion.html         # Ubicación y formulario
+├── gracias.html            # Retorno configurado para FormSubmit
+├── css/
+│   ├── style.css           # Sistema visual compartido
+│   └── inicio.css          # Composición y efectos de Inicio
+├── js/
+│   ├── main.js             # Navegación, catálogo, clientes y hero
+│   ├── inicio.js           # Interacciones y animaciones de Inicio
+│   └── validacion.js       # Validación y estado del formulario
+├── img/                    # Fotografías, variantes WebP y logos
+├── video/                  # Video optimizado y poster del hero
+├── scripts/                # Vista previa y comprobaciones
+├── docs/                   # Informe de optimización técnica
+├── .htaccess               # Compresión, caché y cabeceras
+├── robots.txt
+└── sitemap.xml
+```
 
-### Catálogo
+<details>
+<summary><strong>Notas de mantenimiento y publicación</strong></summary>
 
-La información vive **una sola vez**, dentro de cada `.product-card` en `productos.html`.
-El `summary` tiene un `data-product-index` único y estable. No cambiar ese ID al reordenar tarjetas.
-Los datos del modal se leen de la tarjeta, y las tres imágenes de detalle se toman de sus enlaces
-`.product-image-links`. Sin JavaScript, los mismos datos se consultan en un desplegable nativo.
+- Los identificadores `data-product-index` son únicos. El modal lee la información de cada `.product-card`; los enlaces de `.product-image-links` definen su galería.
+- Los cambios de navegación deben reflejarse tanto en el menú de escritorio como en el móvil. `aria-current="page"` identifica la página activa.
+- Al sustituir CSS o JavaScript, actualizar su versión en las páginas que lo cargan. Las imágenes nuevas deben mantener variantes, referencias y dimensiones coherentes.
+- Para publicar, incluir únicamente páginas, CSS, JavaScript, medios, favicon, `robots.txt`, `sitemap.xml` y la configuración del servidor revisada. Excluir `.git`, herramientas locales, documentación y respaldos.
+- El código fuente de esta rama conserva enlaces `.html`. Las URL sin extensión requieren adaptar enlaces, metadatos y sitemap, además de configurar las reglas correspondientes en Apache. El paquete de cPanel se preparó por separado.
+- Revisar el `.htaccess` existente del hosting antes de integrar reglas; conservar su configuración de HTTPS y dominio para evitar conflictos.
+- El formulario realiza un POST a FormSubmit. La validación local no confirma la recepción del correo ni simula una respuesta satisfactoria.
+- Los originales de medios y los archivos retirados se conservan en respaldos externos al proyecto.
 
-### Navegación y procesos
+Consultar el [informe de optimización técnica](docs/FASE-1-OPTIMIZACION.md) para medidas, límites de verificación y recuperación de la Fase 1.
 
-El menú de escritorio y el desplegable móvil contienen los mismos cinco enlaces a páginas HTML;
-al cambiarlos, actualizar ambos en las cinco páginas. El enlace actual usa `aria-current="page"`.
-CSS muestra únicamente la navegación correspondiente al ancho de pantalla.
-El menú móvil usa `details/summary`: puede abrirse sin JavaScript y no cambia la altura de la cabecera al inicializarse.
+</details>
 
-El proceso de Inicio tiene tres artículos con fotos diferentes. JavaScript los convierte en pestañas
-con flechas, Inicio y Fin; sin JavaScript, los tres artículos siguen disponibles.
+---
 
-La portada reproduce `video/hero-inicio.mp4?v=20261119-1` una sola vez, sin sonido.
-Al terminar muestra `video/hero-poster-20261119.webp`, también utilizado como poster y
-priorizado durante la carga. El video espera a que termine la imagen prioritaria y a que
-el hero esté visible; no se instala ninguna biblioteca para este comportamiento.
-La copia web conserva H.264, 1080p y 30 fps. Los originales MOV, PNG y el MP4 anterior
-se conservan en un respaldo externo identificado en el informe de Fase 1.
-El visitante puede pausar y reanudar el fondo; al salir de pantalla o cambiar de pestaña
-se pausa. Sin JavaScript, con movimiento reducido o si falla la reproducción, se muestra
-la imagen estática. El video no se repite al terminar.
+<div align="center">
 
-### Formulario
+**Una interfaz corporativa cuidada, con decisiones técnicas visibles en el código.**
 
-Se conservaron el destino de FormSubmit, método POST, campos, opciones, `_captcha` y `_next`.
-La validación no representa una confirmación de recepción. El navegador debe recibir la respuesta
-del servicio externo. El botón recupera su estado al volver a la página; una espera prolongada
-informa que la recepción no ha sido confirmada y permite revisar antes de reenviar.
+[Ver repositorio](https://github.com/BurBear/WEB-Multigrafica-Burgos-E.I.R.L.) · [Perfil de GitHub](https://github.com/BurBear)
 
-El teléfono de contacto y WhatsApp utilizan el mismo número: **949 943 587**.
-Los enlaces de WhatsApp usan el formato internacional `51949943587`.
-
-### Animación y accesibilidad
-
-Las entradas usan IntersectionObserver y Web Animations API, sin GSAP ni dependencias de animación.
-No se intercepta la rueda de desplazamiento ni se fijan secciones durante recorridos.
-El contenido es visible por defecto. Las animaciones son mejoras opcionales y se desactivan con
-`prefers-reduced-motion`, incluso al cambiar esa preferencia durante la visita.
-
-El modal usa `dialog.showModal()`, que bloquea la interacción con el fondo, y añade contención
-de foco, Escape, flechas, Inicio/Fin y restauración del foco. El CTA de producto abre
-`cotizacion.html?producto=...` y completa el mensaje únicamente si todavía está vacío.
-Los enlaces de servicio pueden añadir `servicio`, validado contra las opciones del formulario.
-Los enlaces antiguos como `index.html#productos` se redirigen a la página correspondiente.
-
-### Versionado y publicación
-
-Las páginas enlazan CSS y JavaScript con versiones explícitas en sus URL. Al cambiar un
-recurso en futuras publicaciones, incrementar su versión en todas las páginas que lo cargan. Los derivados de imágenes tienen rutas
-propias; para reemplazarlos en producción, usar una ruta nueva o versionar también su URL.
-
-La publicación sigue siendo estática. Incluir las páginas, CSS, JS y recursos referenciados;
-excluir `.git`, `.local`, `docs`, herramientas de revisión, archivos `.rar` y originales de respaldo. En un clon nuevo, recuperar los objetos
-Git LFS antes de publicar videos. No se ha publicado la Fase 1 ni se han activado redirecciones en el hosting.
-
-La revisión de octubre se conserva en el respaldo externo; no forma parte del proyecto vigente.
-La Fase 1 prepara sitemap y robots para `https://www.multigraficaburgos.pe/`.
-`.htaccess` conserva las reglas actuales de compresión, caché y cabeceras; revisar reglas de cPanel y proxy antes de activar redirecciones.
-El informe `docs/FASE-1-OPTIMIZACION.md` incluye medidas, limitaciones y recuperación.
+</div>
